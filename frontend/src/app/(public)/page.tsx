@@ -152,9 +152,9 @@ export default function HomePage() {
             Portal Resmi Pemerintah Kabupaten Aceh Besar
           </div>
 
-          <h1 className="animate-fade-in-up text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
+          <h1 className="animate-fade-in-up text-4xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">
             Portal Data{" "}
-            <span className="gradient-text">Aceh Besar</span>
+            <span className="text-primary">Aceh Besar</span>
           </h1>
           <p className="animate-fade-in-up-1 mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
             Portal Satu Data Aceh Besar merupakan pusat integrasi dan penyebarluasan data Pemerintah Kabupaten Aceh Besar yang menjamin data akurat, mutakhir, terstandar, dan dapat dipertanggungjawabkan untuk mewujudkan transparansi serta akuntabilitas.
