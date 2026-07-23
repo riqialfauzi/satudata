@@ -1,3 +1,22 @@
+// @title Satudata API
+// @version 1.0
+// @description Portal data terbuka API — dataset, artikel, standar data, dan infografis.
+// @termsOfService https://satudata.go.id/terms
+
+// @contact.name Tim Satudata
+// @contact.email info@satudata.go.id
+
+// @license.name MIT
+// @license.url https://opensource.org/licenses/MIT
+
+// @host localhost:8080
+// @BasePath /api/v1
+// @schemes http https
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description Masukkan token dengan format: `Bearer <token>`
 package main
 
 import (

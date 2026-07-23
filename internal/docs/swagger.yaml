@@ -1,0 +1,763 @@
+basePath: /api/v1
+definitions:
+  dto.APIResponse:
+    properties:
+      data: {}
+      errors:
+        items:
+          type: string
+        type: array
+      message:
+        type: string
+      meta:
+        $ref: '#/definitions/dto.MetaData'
+      success:
+        type: boolean
+    type: object
+  dto.ArticleMetadataResponse:
+    properties:
+      author_name:
+        type: string
+      category:
+        type: string
+      content:
+        type: string
+      excerpt:
+        type: string
+      is_featured:
+        type: boolean
+      reading_time_minutes:
+        type: integer
+    type: object
+  dto.CreateReleaseRequest:
+    properties:
+      author_name:
+        type: string
+      category:
+        type: string
+      content:
+        description: Article-specific
+        type: string
+      cover_image_url:
+        type: string
+      data_period_end:
+        type: string
+      data_period_start:
+        type: string
+      data_source:
+        type: string
+      description:
+        type: string
+      excerpt:
+        type: string
+      file_format:
+        type: string
+      file_size:
+        type: integer
+      file_url:
+        description: Dataset-specific
+        type: string
+      is_featured:
+        type: boolean
+      is_geospatial:
+        type: boolean
+      release_type:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+      update_frequency:
+        type: string
+      year:
+        type: integer
+    required:
+    - release_type
+    - title
+    - year
+    type: object
+  dto.CreateStandardRequest:
+    properties:
+      description:
+        type: string
+      file_size:
+        type: integer
+      file_url:
+        type: string
+      is_current:
+        type: boolean
+      title:
+        type: string
+      version:
+        type: string
+      year:
+        type: integer
+    required:
+    - title
+    - year
+    type: object
+  dto.DatasetMetadataResponse:
+    properties:
+      column_count:
+        type: integer
+      data_period_end:
+        type: string
+      data_period_start:
+        type: string
+      data_source:
+        type: string
+      file_format:
+        type: string
+      file_size:
+        type: integer
+      file_url:
+        type: string
+      is_geospatial:
+        type: boolean
+      row_count:
+        type: integer
+      update_frequency:
+        type: string
+    type: object
+  dto.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  dto.MetaData:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+  dto.RefreshTokenRequest:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  dto.RegisterRequest:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - email
+    - full_name
+    - password
+    type: object
+  dto.ReleaseResponse:
+    properties:
+      article_metadata:
+        $ref: '#/definitions/dto.ArticleMetadataResponse'
+      cover_image_url:
+        type: string
+      created_at:
+        type: string
+      created_by:
+        type: string
+      dataset_metadata:
+        $ref: '#/definitions/dto.DatasetMetadataResponse'
+      description:
+        type: string
+      id:
+        type: string
+      published_at:
+        type: string
+      release_type:
+        type: string
+      slug:
+        type: string
+      status:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+      updated_at:
+        type: string
+      view_count:
+        type: integer
+      year:
+        type: integer
+    type: object
+  dto.ReleaseStatsResponse:
+    properties:
+      by_type:
+        additionalProperties:
+          format: int64
+          type: integer
+        type: object
+      by_year:
+        additionalProperties:
+          format: int64
+          type: integer
+        type: object
+      total:
+        type: integer
+    type: object
+  dto.StandardResponse:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      file_size:
+        type: integer
+      file_url:
+        type: string
+      id:
+        type: string
+      is_current:
+        type: boolean
+      status:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      version:
+        type: string
+      year:
+        type: integer
+    type: object
+  dto.TokenResponse:
+    properties:
+      access_token:
+        type: string
+      expires_in:
+        type: integer
+      refresh_token:
+        type: string
+      token_type:
+        type: string
+      user:
+        $ref: '#/definitions/dto.UserResponse'
+    type: object
+  dto.UpdateReleaseRequest:
+    properties:
+      cover_image_url:
+        type: string
+      description:
+        type: string
+      status:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      title:
+        type: string
+      year:
+        type: integer
+    type: object
+  dto.UpdateStandardRequest:
+    properties:
+      description:
+        type: string
+      file_size:
+        type: integer
+      file_url:
+        type: string
+      is_current:
+        type: boolean
+      status:
+        type: string
+      title:
+        type: string
+      version:
+        type: string
+    type: object
+  dto.UserResponse:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      id:
+        type: string
+      role:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: info@satudata.go.id
+    name: Tim Satudata
+  description: Portal data terbuka API — dataset, artikel, standar data, dan infografis.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: https://satudata.go.id/terms
+  title: Satudata API
+  version: "1.0"
+paths:
+  /admin/releases/{id}:
+    delete:
+      description: Menghapus release secara soft-delete (admin only)
+      parameters:
+      - description: Release ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Hapus release (soft-delete)
+      tags:
+      - Admin
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Autentikasi user dengan email dan password, mengembalikan JWT token
+      parameters:
+      - description: Credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.TokenResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      summary: Login user
+      tags:
+      - Auth
+  /auth/logout:
+    post:
+      description: Menghapus session token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Logout user
+      tags:
+      - Auth
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Memperbarui access token menggunakan refresh token
+      parameters:
+      - description: Refresh token
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RefreshTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.TokenResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      summary: Refresh token
+      tags:
+      - Auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Mendaftarkan user baru
+      parameters:
+      - description: Data registrasi
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.UserResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      summary: Register user baru
+      tags:
+      - Auth
+  /protected/profile:
+    get:
+      description: Mengembalikan informasi profile user yang sedang login
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Profile user
+      tags:
+      - Protected
+  /protected/releases:
+    post:
+      consumes:
+      - application/json
+      description: Membuat release baru (dataset, article, atau infographic)
+      parameters:
+      - description: Data release
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateReleaseRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ReleaseResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Buat release baru
+      tags:
+      - Protected
+  /protected/releases/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Memperbarui data release yang sudah ada
+      parameters:
+      - description: Release ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Data update
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateReleaseRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ReleaseResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Update release
+      tags:
+      - Protected
+  /protected/standards:
+    post:
+      consumes:
+      - application/json
+      description: Membuat standar data baru
+      parameters:
+      - description: Data standard
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateStandardRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.StandardResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Buat standar data baru
+      tags:
+      - Protected
+  /protected/standards/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Memperbarui standar data yang sudah ada
+      parameters:
+      - description: Standard ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Data update
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateStandardRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.StandardResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      security:
+      - BearerAuth: []
+      summary: Update standar data
+      tags:
+      - Protected
+  /public/releases:
+    get:
+      consumes:
+      - application/json
+      description: Mengembalikan daftar releases dengan filter, pagination, dan sorting
+      parameters:
+      - description: 'Filter by type: dataset, article, infographic'
+        in: query
+        name: type
+        type: string
+      - description: 'Filter by status: draft, published, archived'
+        in: query
+        name: status
+        type: string
+      - description: Filter by year
+        in: query
+        name: year
+        type: integer
+      - description: Search by title or description
+        in: query
+        name: search
+        type: string
+      - description: 'Page number (default: 1)'
+        in: query
+        name: page
+        type: integer
+      - description: 'Items per page (default: 10, max: 100)'
+        in: query
+        name: limit
+        type: integer
+      - description: 'Sort field (default: created_at)'
+        in: query
+        name: sort_by
+        type: string
+      - description: 'Sort direction: asc, desc (default: desc)'
+        in: query
+        name: sort_dir
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dto.ReleaseResponse'
+                  type: array
+              type: object
+      summary: Daftar releases
+      tags:
+      - Public
+  /public/releases/{id}:
+    get:
+      description: Mengembalikan detail release berdasarkan ID
+      parameters:
+      - description: Release ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ReleaseResponse'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      summary: Detail release by ID
+      tags:
+      - Public
+  /public/releases/slug/{slug}:
+    get:
+      description: Mengembalikan detail release berdasarkan slug (untuk URL SEO-friendly)
+      parameters:
+      - description: Release slug
+        in: path
+        name: slug
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ReleaseResponse'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      summary: Detail release by Slug
+      tags:
+      - Public
+  /public/releases/stats:
+    get:
+      description: Mengembalikan statistik releases (total by type, by year)
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ReleaseStatsResponse'
+              type: object
+      summary: Statistik releases
+      tags:
+      - Public
+  /public/standards:
+    get:
+      description: Mengembalikan semua standar data nasional
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.APIResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dto.StandardResponse'
+                  type: array
+              type: object
+      summary: Daftar standar data
+      tags:
+      - Public
+schemes:
+- http
+- https
+securityDefinitions:
+  BearerAuth:
+    description: 'Masukkan token dengan format: `Bearer <token>`'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

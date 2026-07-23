@@ -19,7 +19,22 @@ func NewReleaseHandler(releaseService service.ReleaseServiceInterface) *ReleaseH
 	}
 }
 
-// GetReleases menangani GET /api/v1/public/releases
+// GetReleases godoc
+// @Summary Daftar releases
+// @Description Mengembalikan daftar releases dengan filter, pagination, dan sorting
+// @Tags Public
+// @Accept json
+// @Produce json
+// @Param type query string false "Filter by type: dataset, article, infographic"
+// @Param status query string false "Filter by status: draft, published, archived"
+// @Param year query int false "Filter by year"
+// @Param search query string false "Search by title or description"
+// @Param page query int false "Page number (default: 1)"
+// @Param limit query int false "Items per page (default: 10, max: 100)"
+// @Param sort_by query string false "Sort field (default: created_at)"
+// @Param sort_dir query string false "Sort direction: asc, desc (default: desc)"
+// @Success 200 {object} dto.APIResponse{data=[]dto.ReleaseResponse}
+// @Router /public/releases [get]
 func (h *ReleaseHandler) GetReleases(c *gin.Context) {
 	var req dto.GetReleasesRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
@@ -71,7 +86,15 @@ func (h *ReleaseHandler) GetReleases(c *gin.Context) {
 	})
 }
 
-// GetReleaseByID menangani GET /api/v1/public/releases/:id
+// GetReleaseByID godoc
+// @Summary Detail release by ID
+// @Description Mengembalikan detail release berdasarkan ID
+// @Tags Public
+// @Produce json
+// @Param id path string true "Release ID"
+// @Success 200 {object} dto.APIResponse{data=dto.ReleaseResponse}
+// @Failure 404 {object} dto.APIResponse
+// @Router /public/releases/{id} [get]
 func (h *ReleaseHandler) GetReleaseByID(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
@@ -88,7 +111,15 @@ func (h *ReleaseHandler) GetReleaseByID(c *gin.Context) {
 	dto.SuccessResponse(c, mapReleaseToResponse(*release))
 }
 
-// GetReleaseBySlug menangani GET /api/v1/public/releases/slug/:slug
+// GetReleaseBySlug godoc
+// @Summary Detail release by Slug
+// @Description Mengembalikan detail release berdasarkan slug (untuk URL SEO-friendly)
+// @Tags Public
+// @Produce json
+// @Param slug path string true "Release slug"
+// @Success 200 {object} dto.APIResponse{data=dto.ReleaseResponse}
+// @Failure 404 {object} dto.APIResponse
+// @Router /public/releases/slug/{slug} [get]
 func (h *ReleaseHandler) GetReleaseBySlug(c *gin.Context) {
 	slug := c.Param("slug")
 	if slug == "" {
@@ -105,7 +136,17 @@ func (h *ReleaseHandler) GetReleaseBySlug(c *gin.Context) {
 	dto.SuccessResponse(c, mapReleaseToResponse(*release))
 }
 
-// CreateRelease menangani POST /api/v1/protected/releases
+// CreateRelease godoc
+// @Summary Buat release baru
+// @Description Membuat release baru (dataset, article, atau infographic)
+// @Tags Protected
+// @Accept json
+// @Produce json
+// @Param request body dto.CreateReleaseRequest true "Data release"
+// @Success 201 {object} dto.APIResponse{data=dto.ReleaseResponse}
+// @Failure 400 {object} dto.APIResponse
+// @Security BearerAuth
+// @Router /protected/releases [post]
 func (h *ReleaseHandler) CreateRelease(c *gin.Context) {
 	var req dto.CreateReleaseRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -144,7 +185,18 @@ func (h *ReleaseHandler) CreateRelease(c *gin.Context) {
 	dto.CreatedResponse(c, mapReleaseToResponse(*release))
 }
 
-// UpdateRelease menangani PUT /api/v1/protected/releases/:id
+// UpdateRelease godoc
+// @Summary Update release
+// @Description Memperbarui data release yang sudah ada
+// @Tags Protected
+// @Accept json
+// @Produce json
+// @Param id path string true "Release ID"
+// @Param request body dto.UpdateReleaseRequest true "Data update"
+// @Success 200 {object} dto.APIResponse{data=dto.ReleaseResponse}
+// @Failure 400 {object} dto.APIResponse
+// @Security BearerAuth
+// @Router /protected/releases/{id} [put]
 func (h *ReleaseHandler) UpdateRelease(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
@@ -176,7 +228,16 @@ func (h *ReleaseHandler) UpdateRelease(c *gin.Context) {
 	dto.SuccessResponse(c, mapReleaseToResponse(*release))
 }
 
-// DeleteRelease menangani DELETE /api/v1/admin/releases/:id
+// DeleteRelease godoc
+// @Summary Hapus release (soft-delete)
+// @Description Menghapus release secara soft-delete (admin only)
+// @Tags Admin
+// @Produce json
+// @Param id path string true "Release ID"
+// @Success 200 {object} dto.APIResponse
+// @Failure 400 {object} dto.APIResponse
+// @Security BearerAuth
+// @Router /admin/releases/{id} [delete]
 func (h *ReleaseHandler) DeleteRelease(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
@@ -192,7 +253,13 @@ func (h *ReleaseHandler) DeleteRelease(c *gin.Context) {
 	dto.SuccessResponse(c, gin.H{"message": "Release deleted successfully"})
 }
 
-// GetReleaseStats menangani GET /api/v1/public/releases/stats
+// GetReleaseStats godoc
+// @Summary Statistik releases
+// @Description Mengembalikan statistik releases (total by type, by year)
+// @Tags Public
+// @Produce json
+// @Success 200 {object} dto.APIResponse{data=dto.ReleaseStatsResponse}
+// @Router /public/releases/stats [get]
 func (h *ReleaseHandler) GetReleaseStats(c *gin.Context) {
 	stats, err := h.releaseService.GetReleaseStats(c.Request.Context())
 	if err != nil {

@@ -223,10 +223,10 @@
       - `GET /audit-logs`
 
 ### 5.2 API Documentation (Swagger)
-- [ ] Install swaggo _(pending)_
-- [ ] Tambahkan annotations di handlers _(pending)_
-- [ ] Generate docs _(pending)_
-- [ ] Serve Swagger UI _(pending)_
+- [x] Install swaggo
+- [x] Tambahkan annotations di handlers (15 endpoints documented)
+- [x] Generate docs (swagger.json, swagger.yaml, docs.go)
+- [x] Serve Swagger UI di `/swagger/index.html`
 
 ### 5.3 Validation
 - [x] Implementasi request validators (via Gin binding tags)

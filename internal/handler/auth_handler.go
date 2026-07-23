@@ -19,7 +19,16 @@ func NewAuthHandler(authService service.AuthServiceInterface) *AuthHandler {
 	}
 }
 
-// Login menangani POST /api/v1/auth/login
+// Login godoc
+// @Summary Login user
+// @Description Autentikasi user dengan email dan password, mengembalikan JWT token
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body dto.LoginRequest true "Credentials"
+// @Success 200 {object} dto.APIResponse{data=dto.TokenResponse}
+// @Failure 401 {object} dto.APIResponse
+// @Router /auth/login [post]
 func (h *AuthHandler) Login(c *gin.Context) {
 	var req dto.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -52,7 +61,16 @@ func (h *AuthHandler) Login(c *gin.Context) {
 	})
 }
 
-// Register menangani POST /api/v1/auth/register
+// Register godoc
+// @Summary Register user baru
+// @Description Mendaftarkan user baru
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body dto.RegisterRequest true "Data registrasi"
+// @Success 201 {object} dto.APIResponse{data=dto.UserResponse}
+// @Failure 400 {object} dto.APIResponse
+// @Router /auth/register [post]
 func (h *AuthHandler) Register(c *gin.Context) {
 	var req dto.RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -80,7 +98,16 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	})
 }
 
-// RefreshToken menangani POST /api/v1/auth/refresh
+// RefreshToken godoc
+// @Summary Refresh token
+// @Description Memperbarui access token menggunakan refresh token
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body dto.RefreshTokenRequest true "Refresh token"
+// @Success 200 {object} dto.APIResponse{data=dto.TokenResponse}
+// @Failure 401 {object} dto.APIResponse
+// @Router /auth/refresh [post]
 func (h *AuthHandler) RefreshToken(c *gin.Context) {
 	var req dto.RefreshTokenRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -108,7 +135,14 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 	})
 }
 
-// Logout menangani POST /api/v1/auth/logout
+// Logout godoc
+// @Summary Logout user
+// @Description Menghapus session token
+// @Tags Auth
+// @Produce json
+// @Success 200 {object} dto.APIResponse
+// @Security BearerAuth
+// @Router /auth/logout [post]
 func (h *AuthHandler) Logout(c *gin.Context) {
 	authHeader := c.GetHeader("Authorization")
 	if authHeader != "" && len(authHeader) > 7 {
@@ -119,7 +153,14 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 	dto.SuccessResponse(c, gin.H{"message": "Logged out successfully"})
 }
 
-// GetProfile menangani GET /api/v1/protected/profile
+// GetProfile godoc
+// @Summary Profile user
+// @Description Mengembalikan informasi profile user yang sedang login
+// @Tags Protected
+// @Produce json
+// @Success 200 {object} dto.APIResponse
+// @Security BearerAuth
+// @Router /protected/profile [get]
 func (h *AuthHandler) GetProfile(c *gin.Context) {
 	userID := middleware.GetUserID(c)
 	userRole := middleware.GetUserRole(c)

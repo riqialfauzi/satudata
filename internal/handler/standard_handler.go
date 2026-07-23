@@ -18,7 +18,13 @@ func NewStandardHandler(standardService service.StandardServiceInterface) *Stand
 	}
 }
 
-// GetStandards menangani GET /api/v1/public/standards
+// GetStandards godoc
+// @Summary Daftar standar data
+// @Description Mengembalikan semua standar data nasional
+// @Tags Public
+// @Produce json
+// @Success 200 {object} dto.APIResponse{data=[]dto.StandardResponse}
+// @Router /public/standards [get]
 func (h *StandardHandler) GetStandards(c *gin.Context) {
 	standards, err := h.standardService.GetStandards(c.Request.Context())
 	if err != nil {
@@ -46,7 +52,17 @@ func (h *StandardHandler) GetStandards(c *gin.Context) {
 	dto.SuccessResponse(c, response)
 }
 
-// CreateStandard menangani POST /api/v1/protected/standards
+// CreateStandard godoc
+// @Summary Buat standar data baru
+// @Description Membuat standar data baru
+// @Tags Protected
+// @Accept json
+// @Produce json
+// @Param request body dto.CreateStandardRequest true "Data standard"
+// @Success 201 {object} dto.APIResponse{data=dto.StandardResponse}
+// @Failure 400 {object} dto.APIResponse
+// @Security BearerAuth
+// @Router /protected/standards [post]
 func (h *StandardHandler) CreateStandard(c *gin.Context) {
 	var req dto.CreateStandardRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -85,7 +101,18 @@ func (h *StandardHandler) CreateStandard(c *gin.Context) {
 	})
 }
 
-// UpdateStandard menangani PUT /api/v1/protected/standards/:id
+// UpdateStandard godoc
+// @Summary Update standar data
+// @Description Memperbarui standar data yang sudah ada
+// @Tags Protected
+// @Accept json
+// @Produce json
+// @Param id path string true "Standard ID"
+// @Param request body dto.UpdateStandardRequest true "Data update"
+// @Success 200 {object} dto.APIResponse{data=dto.StandardResponse}
+// @Failure 400 {object} dto.APIResponse
+// @Security BearerAuth
+// @Router /protected/standards/{id} [put]
 func (h *StandardHandler) UpdateStandard(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {

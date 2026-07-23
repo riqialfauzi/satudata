@@ -10,7 +10,11 @@ import (
 	"github.com/satudata/backend/internal/repository"
 	"github.com/satudata/backend/internal/service"
 	"github.com/satudata/backend/pkg/cache"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"gorm.io/gorm"
+
+	_ "github.com/satudata/backend/internal/docs" // Swagger docs
 )
 
 // SetupRoutes mengkonfigurasi semua routes API.
@@ -50,6 +54,9 @@ func SetupRoutes(
 			WindowTime:  1 * time.Minute,
 		}))
 	}
+
+	// Swagger UI
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// API v1 routes
 	apiV1 := router.Group("/api/v1")
