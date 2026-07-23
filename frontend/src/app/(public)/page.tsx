@@ -26,11 +26,10 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 text-center">
           <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
             Portal Data{" "}
-            <span className="text-primary">Terbuka</span> Aceh Besar
+            <span className="text-primary">Aceh Besar</span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            Akses data statistik sektoral, open data, dan informasi publik
-            Kabupaten Aceh Besar secara terbuka dan transparan.
+            Portal Satu Data Aceh Besar merupakan pusat integrasi dan penyebarluasan data Pemerintah Kabupaten Aceh Besar yang menjamin data akurat, mutakhir, terstandar, dan dapat dipertanggungjawabkan untuk mewujudkan transparansi serta akuntabilitas.
           </p>
 
           {/* Search CTA */}

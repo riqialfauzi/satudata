@@ -15,23 +15,23 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Aceh Besar Satu - Portal Data Terbuka",
+    default: "Aceh Besar Satu - Portal Data Aceh Besar",
     template: "%s - Aceh Besar Satu",
   },
-  description: "Portal data terbuka Kabupaten Aceh Besar. Akses dataset, statistik sektoral, dan informasi publik.",
-  keywords: ["data terbuka", "statistik", "Aceh Besar", "dataset", "portal data", "open data"],
+  description: "Portal Satu Data Aceh Besar merupakan pusat integrasi dan penyebarluasan data Pemerintah Kabupaten Aceh Besar yang menjamin data akurat, mutakhir, terstandar, dan dapat dipertanggungjawabkan.",
+  keywords: ["satu data", "Aceh Besar", "portal data", "open data", "statistik sektoral"],
   authors: [{ name: "Aceh Besar Satu" }],
   openGraph: {
     type: "website",
     locale: "id_ID",
     siteName: "Aceh Besar Satu",
-    title: "Aceh Besar Satu - Portal Data Terbuka",
-    description: "Portal data terbuka Kabupaten Aceh Besar.",
+    title: "Aceh Besar Satu - Portal Data Aceh Besar",
+    description: "Portal Satu Data Aceh Besar - pusat integrasi dan penyebarluasan data Pemerintah Kabupaten Aceh Besar.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aceh Besar Satu - Portal Data Terbuka",
-    description: "Portal data terbuka Kabupaten Aceh Besar.",
+    title: "Aceh Besar Satu - Portal Data Aceh Besar",
+    description: "Portal Satu Data Aceh Besar - pusat integrasi dan penyebarluasan data Pemerintah Kabupaten Aceh Besar.",
   },
   robots: {
     index: true,

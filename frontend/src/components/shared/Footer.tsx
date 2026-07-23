@@ -12,7 +12,7 @@ export function Footer() {
               Aceh Besar Satu
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
-              Portal data terbuka Kabupaten Aceh Besar.
+              Portal Satu Data Aceh Besar — pusat integrasi dan penyebarluasan data Pemerintah Kabupaten Aceh Besar.
             </p>
           </div>
           <div>
