@@ -8,7 +8,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { useEffect } from "react";
-import { LogIn, Mail, Lock, Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email("Email tidak valid"),
@@ -55,12 +56,18 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-6 rounded-xl border bg-card p-8 shadow-lg">
         {/* Header */}
         <div className="text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-            <LogIn className="h-6 w-6 text-primary" />
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-primary/5">
+            <Image
+              src="/logo-icon.svg"
+              alt="Lambang Aceh Besar"
+              width={28}
+              height={28}
+              className="h-7 w-7"
+            />
           </div>
           <h1 className="text-2xl font-bold tracking-tight">Masuk</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Masuk ke dashboard Satudata
+            Masuk ke dashboard Aceh Besar Satu
           </p>
         </div>
 
