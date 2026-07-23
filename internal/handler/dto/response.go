@@ -150,6 +150,41 @@ type TokenResponse struct {
 	User         UserResponse `json:"user"`
 }
 
+// OrganizationResponse adalah response DTO untuk organisasi.
+type OrganizationResponse struct {
+	ID           string `json:"id"`
+	Slug         string `json:"slug"`
+	Name         string `json:"name"`
+	Description  string `json:"description,omitempty"`
+	ImageURL     string `json:"image_url,omitempty"`
+	Website      string `json:"website,omitempty"`
+	DatasetCount int    `json:"dataset_count,omitempty"`
+}
+
+// GroupResponse adalah response DTO untuk grup/kategori.
+type GroupResponse struct {
+	ID           string `json:"id"`
+	Slug         string `json:"slug"`
+	Name         string `json:"name"`
+	Description  string `json:"description,omitempty"`
+	ImageURL     string `json:"image_url,omitempty"`
+	DatasetCount int    `json:"dataset_count,omitempty"`
+}
+
+// SearchSuggestResponse adalah response DTO untuk search suggest.
+type SearchSuggestResponse struct {
+	Suggestions []string          `json:"suggestions"`
+	Results     []ReleaseResponse `json:"results,omitempty"`
+}
+
+// UploadResponse adalah response DTO untuk upload file.
+type UploadResponse struct {
+	URL        string `json:"url"`
+	FileName   string `json:"file_name"`
+	FileSize   int64  `json:"file_size"`
+	FileFormat string `json:"file_format"`
+}
+
 // UserResponse adalah response DTO untuk data user.
 type UserResponse struct {
 	ID       string `json:"id"`

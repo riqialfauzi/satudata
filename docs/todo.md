@@ -222,18 +222,17 @@
       - `PUT /users/:id/role`
       - `GET /audit-logs`
 
-### 5.2 API Documentation (Swagger)
-- [x] Install swaggo
-- [x] Tambahkan annotations di handlers (15 endpoints documented)
+### 5.2 API Documentation
+- [x] Tambahkan OpenAPI/Swagger annotations di handlers (15 endpoints documented)
 - [x] Generate docs (swagger.json, swagger.yaml, docs.go)
 - [x] Serve Swagger UI di `/swagger/index.html`
 
 ### 5.3 Validation
 - [x] Implementasi request validators (via Gin binding tags)
-- [ ] Custom validators untuk:
-  - [ ] Enum validation (`ReleaseType`) _(via service layer)_
-  - [ ] Date format validation _(via service layer)_
-  - [ ] File size/type validation _(pending)_
+- [x] Custom validators untuk:
+  - [x] Enum validation (`ReleaseType`) _(via service layer)_
+  - [x] Date format validation _(via service layer)_
+  - [x] File size/type validation _(implemented in upload handler)_
 
 ---
 
@@ -352,7 +351,7 @@
 |----------|----------|
 | **P0 (Must Have)** | Setup, Config, DB, Core Models, Get Releases API, Health Check |
 | **P1 (High)** | Auth (JWT), Create/Update/Delete Release, Redis Cache, File Upload |
-| **P2 (Medium)** | Standards, NATS Integration, Audit Logs, Swagger Docs |
+| **P2 (Medium)** | Standards, NATS Integration, Audit Logs, API Documentation |
 | **P3 (Nice to Have)** | Rate Limiting, Metrics/Prometheus, Load Testing |
 
 ---

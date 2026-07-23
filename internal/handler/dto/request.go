@@ -88,3 +88,33 @@ type RegisterRequest struct {
 type RefreshTokenRequest struct {
 	RefreshToken string `json:"refresh_token" binding:"required"`
 }
+
+// CreateOrganizationRequest adalah request body untuk membuat organisasi baru.
+type CreateOrganizationRequest struct {
+	Name        string `json:"name" binding:"required"`
+	Description string `json:"description"`
+	ImageURL    string `json:"image_url"`
+	Website     string `json:"website"`
+}
+
+// UpdateOrganizationRequest adalah request body untuk memperbarui organisasi.
+type UpdateOrganizationRequest struct {
+	Name        string  `json:"name"`
+	Description *string `json:"description"`
+	ImageURL    *string `json:"image_url"`
+	Website     *string `json:"website"`
+}
+
+// CreateGroupRequest adalah request body untuk membuat grup baru.
+type CreateGroupRequest struct {
+	Name        string `json:"name" binding:"required"`
+	Description string `json:"description"`
+	ImageURL    string `json:"image_url"`
+}
+
+// UpdateGroupRequest adalah request body untuk memperbarui grup.
+type UpdateGroupRequest struct {
+	Name        string  `json:"name"`
+	Description *string `json:"description"`
+	ImageURL    *string `json:"image_url"`
+}

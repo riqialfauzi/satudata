@@ -35,6 +35,12 @@ export function Header() {
           >
             Standar Data
           </Link>
+          <Link href="/tentang" className="text-sm font-medium hover:text-primary">
+            Tentang
+          </Link>
+          <Link href="/faq" className="text-sm font-medium hover:text-primary">
+            FAQ
+          </Link>
           <ThemeToggle />
           {isAuthenticated ? (
             <Link
@@ -79,6 +85,12 @@ export function Header() {
             </Link>
             <Link href="/standards" className="text-sm font-medium" onClick={() => setOpen(false)}>
               Standar Data
+            </Link>
+            <Link href="/tentang" className="text-sm font-medium" onClick={() => setOpen(false)}>
+              Tentang
+            </Link>
+            <Link href="/faq" className="text-sm font-medium" onClick={() => setOpen(false)}>
+              FAQ
             </Link>
             <div className="flex items-center gap-2">
               <ThemeToggle />

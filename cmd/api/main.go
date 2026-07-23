@@ -74,9 +74,10 @@ func main() {
 	}
 
 	// Initialize MinIO storage
-	_, err = storage.Init(cfg.MinIO)
+	minioClient, err := storage.Init(cfg.MinIO)
 	if err != nil {
 		l.Warn("Failed to initialize MinIO storage, continuing without storage", zap.Error(err))
+		minioClient = nil
 	}
 
 	// Setup Gin with middleware and routes
@@ -117,7 +118,7 @@ func main() {
 	})
 
 	// Setup all API routes
-	router.SetupRoutes(r, cfg, db, redisCache)
+	router.SetupRoutes(r, cfg, db, redisCache, minioClient)
 
 	// Setup HTTP server
 	srv := &http.Server{

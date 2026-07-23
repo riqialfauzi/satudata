@@ -50,8 +50,12 @@ func (r *ReleaseRepository) GetReleases(ctx context.Context, filter ReleaseFilte
 		query = query.Where("year = ?", filter.Year)
 	}
 	if filter.Search != "" {
+		// Try full-text search first, fallback to ILIKE
 		search := "%" + filter.Search + "%"
-		query = query.Where("title ILIKE ? OR description ILIKE ?", search, search)
+		query = query.Where(
+			"search_vector @@ plainto_tsquery('indonesian', ?) OR title ILIKE ? OR description ILIKE ?",
+			filter.Search, search, search,
+		)
 	}
 
 	// Count total
@@ -264,6 +268,43 @@ func (r *ReleaseRepository) GetReleaseStats(ctx context.Context) (map[string]int
 	}
 
 	return stats, nil
+}
+
+// GetRelatedReleases mengambil releases terkait (berdasarkan tags yang sama, exclude ID tertentu).
+func (r *ReleaseRepository) GetRelatedReleases(ctx context.Context, releaseID string, limit int) ([]domain.Release, error) {
+	// Cari tags dari release ini
+	var currentRelease domain.Release
+	if err := r.db.WithContext(ctx).
+		Where("id = ? AND deleted_at IS NULL", releaseID).
+		First(&currentRelease).Error; err != nil {
+		return nil, nil
+	}
+
+	// Cari release lain dengan tags yang sama
+	var releases []domain.Release
+	query := r.db.WithContext(ctx).
+		Where("deleted_at IS NULL AND status = 'published' AND id != ?", releaseID)
+
+	// If release has tags, find by similar tags
+	if len(currentRelease.Tags) > 0 {
+		// Build a JSON containment query for tags
+		for _, tag := range currentRelease.Tags {
+			query = query.Or("tags @> ?", fmt.Sprintf(`["%s"]`, tag))
+		}
+	} else {
+		// Fallback: same type
+		query = query.Where("release_type = ?", currentRelease.ReleaseType)
+	}
+
+	if err := query.
+		Preload("DatasetMetadata").
+		Preload("ArticleMetadata").
+		Limit(limit).
+		Find(&releases).Error; err != nil {
+		return nil, fmt.Errorf("failed to get related releases: %w", err)
+	}
+
+	return releases, nil
 }
 
 // invalidateListCache menghapus cache daftar releases.

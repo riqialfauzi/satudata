@@ -48,4 +48,11 @@ export const releasesApi = {
   delete: async (id: string): Promise<void> => {
     await apiClient.delete(`/api/v1/admin/releases/${id}`);
   },
+
+  getRelated: async (id: string, limit: number = 5): Promise<Release[]> => {
+    const response = await apiClient.get(`/api/v1/public/releases/${id}/related`, {
+      params: { limit },
+    });
+    return unwrap<Release[]>(response);
+  },
 };

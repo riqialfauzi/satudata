@@ -172,3 +172,31 @@ export interface ReleaseFilter {
   sort_by?: string;
   sort_dir?: string;
 }
+
+// ============ Organization & Group ============
+
+export interface Organization {
+  id: string;
+  slug: string;
+  name: string;
+  description?: string;
+  image_url?: string;
+  website?: string;
+  dataset_count?: number;
+}
+
+export interface Group {
+  id: string;
+  slug: string;
+  name: string;
+  description?: string;
+  image_url?: string;
+  dataset_count?: number;
+}
+
+// ============ Search ============
+
+export interface SearchSuggestResponse {
+  suggestions: string[];
+  results?: Release[];
+}

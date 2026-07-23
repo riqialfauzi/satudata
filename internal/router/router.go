@@ -10,6 +10,7 @@ import (
 	"github.com/satudata/backend/internal/repository"
 	"github.com/satudata/backend/internal/service"
 	"github.com/satudata/backend/pkg/cache"
+	"github.com/satudata/backend/pkg/storage"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"gorm.io/gorm"
@@ -23,6 +24,7 @@ func SetupRoutes(
 	cfg *config.Config,
 	db *gorm.DB,
 	redisCache *cache.RedisCache,
+	minioClient *storage.StorageClient,
 ) {
 	// Initialize repositories
 	cacheRepo := repository.NewCacheRepository(redisCache)
@@ -37,10 +39,36 @@ func SetupRoutes(
 	standardService := service.NewStandardService(standardRepo)
 	authService := service.NewAuthService(userRepo, cfg.JWT)
 
+	// Initialize Organization & Group repositories
+	orgRepo := repository.NewOrganizationRepository(db, cacheRepo)
+	groupRepo := repository.NewGroupRepository(db, cacheRepo)
+
+	// Initialize Organization & Group services
+	orgService := service.NewOrganizationService(orgRepo)
+	groupService := service.NewGroupService(groupRepo)
+
+	// Initialize Search service
+	searchService := service.NewSearchService(db)
+
+	// Initialize Storage service
+	var storageService service.StorageServiceInterface
+	if minioClient != nil {
+		storageService = service.NewStorageService(minioClient)
+	}
+
 	// Initialize handlers
 	releaseHandler := handler.NewReleaseHandler(releaseService)
 	standardHandler := handler.NewStandardHandler(standardService)
 	authHandler := handler.NewAuthHandler(authService)
+	orgHandler := handler.NewOrganizationHandler(orgService)
+	groupHandler := handler.NewGroupHandler(groupService)
+	searchHandler := handler.NewSearchHandler(searchService, releaseService)
+
+	// Initialize Upload handler
+	var uploadHandler *handler.UploadHandler
+	if storageService != nil {
+		uploadHandler = handler.NewUploadHandler(storageService)
+	}
 
 	// Apply global middleware
 	router.Use(middleware.CORSMiddleware(cfg.App.CORSOrigins))
@@ -79,6 +107,18 @@ func SetupRoutes(
 
 			// Standards
 			public.GET("/standards", standardHandler.GetStandards)
+
+			// Organizations
+			public.GET("/organizations", orgHandler.GetOrganizations)
+			public.GET("/organizations/:slug", orgHandler.GetOrganizationBySlug)
+
+			// Groups
+			public.GET("/groups", groupHandler.GetGroups)
+			public.GET("/groups/:slug", groupHandler.GetGroupBySlug)
+
+			// Search
+			public.GET("/search/suggest", searchHandler.SearchSuggest)
+			public.GET("/search", searchHandler.Search)
 		}
 
 		// ========== Auth Endpoints ==========
@@ -104,6 +144,13 @@ func SetupRoutes(
 			// Standards CRUD
 			protected.POST("/standards", standardHandler.CreateStandard)
 			protected.PUT("/standards/:id", standardHandler.UpdateStandard)
+
+			// File uploads
+			if uploadHandler != nil {
+				protected.POST("/upload/dataset", uploadHandler.UploadDatasetFile)
+				protected.POST("/upload/article-image", uploadHandler.UploadArticleImageFile)
+				protected.POST("/upload/standard-doc", uploadHandler.UploadStandardDocFile)
+			}
 		}
 
 		// ========== Admin Endpoints (admin only) ==========
@@ -113,6 +160,16 @@ func SetupRoutes(
 		{
 			// Releases - Delete
 			admin.DELETE("/releases/:id", releaseHandler.DeleteRelease)
+
+			// Organizations CRUD
+			admin.POST("/organizations", orgHandler.CreateOrganization)
+			admin.PUT("/organizations/:id", orgHandler.UpdateOrganization)
+			admin.DELETE("/organizations/:id", orgHandler.DeleteOrganization)
+
+			// Groups CRUD
+			admin.POST("/groups", groupHandler.CreateGroup)
+			admin.PUT("/groups/:id", groupHandler.UpdateGroup)
+			admin.DELETE("/groups/:id", groupHandler.DeleteGroup)
 
 			// Users management
 			admin.GET("/users", func(c *gin.Context) {
@@ -131,4 +188,7 @@ func SetupRoutes(
 
 	// Slug-based route (outside /public prefix for cleaner URLs)
 	router.GET("/api/v1/public/releases/slug/:slug", releaseHandler.GetReleaseBySlug)
+
+	// Related releases route
+	router.GET("/api/v1/public/releases/:id/related", releaseHandler.GetRelatedReleases)
 }

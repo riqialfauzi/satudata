@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 	"github.com/satudata/backend/internal/domain"
 	"github.com/satudata/backend/internal/handler/dto"
@@ -226,6 +228,41 @@ func (h *ReleaseHandler) UpdateRelease(c *gin.Context) {
 	}
 
 	dto.SuccessResponse(c, mapReleaseToResponse(*release))
+}
+
+// GetRelatedReleases godoc
+// @Summary Releases terkait
+// @Description Mengembalikan daftar releases terkait berdasarkan tags yang sama
+// @Tags Public
+// @Produce json
+// @Param id path string true "Release ID"
+// @Param limit query int false "Number of related items (default: 5, max: 20)"
+// @Success 200 {object} dto.APIResponse{data=[]dto.ReleaseResponse}
+// @Router /public/releases/{id}/related [get]
+func (h *ReleaseHandler) GetRelatedReleases(c *gin.Context) {
+	id := c.Param("id")
+	if id == "" {
+		dto.BadRequestResponse(c, "Release ID is required")
+		return
+	}
+
+	limit := 5
+	if l, err := strconv.Atoi(c.Query("limit")); err == nil && l > 0 {
+		limit = l
+	}
+
+	releases, err := h.releaseService.GetRelatedReleases(c.Request.Context(), id, limit)
+	if err != nil {
+		dto.InternalErrorResponse(c, err.Error())
+		return
+	}
+
+	var response []dto.ReleaseResponse
+	for _, release := range releases {
+		response = append(response, mapReleaseToResponse(release))
+	}
+
+	dto.SuccessResponse(c, response)
 }
 
 // DeleteRelease godoc

@@ -25,3 +25,11 @@ export function useReleaseStats() {
     queryFn: () => releasesApi.getStats(),
   });
 }
+
+export function useRelatedReleases(id: string, limit: number = 5) {
+  return useQuery({
+    queryKey: ["releases", "related", id],
+    queryFn: () => releasesApi.getRelated(id, limit),
+    enabled: !!id,
+  });
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useReleaseBySlug } from "@/hooks/useReleases";
+import { useReleaseBySlug, useRelatedReleases } from "@/hooks/useReleases";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,6 +13,7 @@ import {
   Database,
   User,
   Clock,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -20,6 +21,7 @@ import { ArrowLeft } from "lucide-react";
 export default function ReleaseDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const { data: release, isLoading, error } = useReleaseBySlug(slug);
+  const { data: related } = useRelatedReleases(release?.id || "", 4);
 
   if (isLoading) {
     return (
@@ -205,6 +207,55 @@ export default function ReleaseDetailPage() {
             />
           </CardContent>
         </Card>
+      )}
+
+      {/* Related Releases */}
+      {related && related.length > 0 && (
+        <section className="mt-12">
+          <div className="mb-6 flex items-center justify-between">
+            <h2 className="text-xl font-bold">Terkait</h2>
+            <Link
+              href="/releases"
+              className="flex items-center gap-1 text-sm text-primary hover:underline"
+            >
+              Lihat Semua <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {related.map((item) => (
+              <Link key={item.id} href={`/releases/${item.slug}`}>
+                <Card className="h-full transition-shadow hover:shadow-md">
+                  <CardContent className="p-5">
+                    <div className="flex items-start justify-between">
+                      <Badge
+                        variant={
+                          item.release_type === "dataset"
+                            ? "default"
+                            : item.release_type === "article"
+                            ? "secondary"
+                            : "outline"
+                        }
+                      >
+                        {item.release_type}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">
+                        {item.year}
+                      </span>
+                    </div>
+                    <h3 className="mt-3 font-semibold line-clamp-2">
+                      {item.title}
+                    </h3>
+                    {item.description && (
+                      <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
+                        {item.description}
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </section>
       )}
     </div>
   );

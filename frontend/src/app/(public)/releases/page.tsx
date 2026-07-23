@@ -2,12 +2,15 @@
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useReleases } from "@/hooks/useReleases";
+import { useOrganizations } from "@/hooks/useOrganizations";
+import { useGroups } from "@/hooks/useGroups";
 import Link from "next/link";
-import { Search, TrendingUp, ChevronLeft, ChevronRight } from "lucide-react";
+import { TrendingUp, ChevronLeft, ChevronRight, SlidersHorizontal, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useCallback } from "react";
+import { SearchBar } from "@/components/ui/search-bar";
+import { useCallback, useState } from "react";
 
 const RELEASE_TYPES = [
   { value: "", label: "Semua" },
@@ -26,7 +29,10 @@ export default function ReleasesPage() {
   const type = searchParams.get("type") || "";
   const year = searchParams.get("year") || "";
   const q = searchParams.get("q") || "";
+  const org = searchParams.get("org") || "";
+  const group = searchParams.get("group") || "";
   const page = parseInt(searchParams.get("page") || "1");
+  const [showFilters, setShowFilters] = useState(false);
 
   const { data, isLoading, error } = useReleases({
     type: type || undefined,
@@ -35,6 +41,8 @@ export default function ReleasesPage() {
     page,
     limit: 10,
   });
+  const { data: orgs } = useOrganizations();
+  const { data: groups } = useGroups();
 
   const setFilter = useCallback(
     (key: string, value: string) => {
@@ -50,6 +58,8 @@ export default function ReleasesPage() {
     [searchParams, router, pathname]
   );
 
+  const activeFilterCount = [type, year, org, group].filter(Boolean).length;
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
       <h1 className="text-3xl font-bold">Data & Artikel</h1>
@@ -58,49 +68,160 @@ export default function ReleasesPage() {
       </p>
 
       {/* Filters */}
-      <div className="mt-6 flex flex-wrap gap-3">
-        {/* Search */}
-        <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Cari..."
-            defaultValue={q}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                setFilter("q", (e.target as HTMLInputElement).value);
-              }
-            }}
-            className="w-full rounded-lg border bg-background py-2 pl-10 pr-3 text-sm"
-          />
+      <div className="mt-6 space-y-3">
+        {/* Search & Quick Filters Row */}
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex-1 min-w-[200px]">
+            <SearchBar
+              value={q}
+              onChange={(val) => {
+                if (!val) setFilter("q", "");
+              }}
+              onSearch={(val) => setFilter("q", val)}
+              placeholder="Cari dataset, artikel..."
+            />
+          </div>
+
+          {/* Type filter */}
+          <select
+            value={type}
+            onChange={(e) => setFilter("type", e.target.value)}
+            className="rounded-lg border bg-background px-3 py-2 text-sm"
+          >
+            {RELEASE_TYPES.map((t) => (
+              <option key={t.value} value={t.value}>
+                {t.label}
+              </option>
+            ))}
+          </select>
+
+          {/* Year filter */}
+          <select
+            value={year}
+            onChange={(e) => setFilter("year", e.target.value)}
+            className="rounded-lg border bg-background px-3 py-2 text-sm"
+          >
+            <option value="">Semua Tahun</option>
+            {YEARS.map((y) => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
+          </select>
+
+          {/* Toggle facet filter */}
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors ${
+              showFilters || activeFilterCount > 0
+                ? "border-primary bg-primary/10 text-primary"
+                : "hover:bg-muted"
+            }`}
+          >
+            <SlidersHorizontal className="h-4 w-4" />
+            Filter
+            {activeFilterCount > 0 && (
+              <Badge variant="default" className="h-5 px-1.5 text-xs">
+                {activeFilterCount}
+              </Badge>
+            )}
+          </button>
         </div>
 
-        {/* Type filter */}
-        <select
-          value={type}
-          onChange={(e) => setFilter("type", e.target.value)}
-          className="rounded-lg border bg-background px-3 py-2 text-sm"
-        >
-          {RELEASE_TYPES.map((t) => (
-            <option key={t.value} value={t.value}>
-              {t.label}
-            </option>
-          ))}
-        </select>
+        {/* Facet Filters (collapsible) */}
+        {showFilters && (
+          <div className="rounded-lg border bg-card p-4">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold">Filter Lanjutan</h3>
+              <button
+                onClick={() => {
+                  setFilter("org", "");
+                  setFilter("group", "");
+                }}
+                className="text-xs text-muted-foreground hover:text-foreground"
+              >
+                Reset filter
+              </button>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {/* Organization filter */}
+              <div>
+                <label className="text-xs font-medium text-muted-foreground">
+                  Organisasi
+                </label>
+                <select
+                  value={org}
+                  onChange={(e) => setFilter("org", e.target.value)}
+                  className="mt-1 w-full rounded-lg border bg-background px-3 py-2 text-sm"
+                >
+                  <option value="">Semua Organisasi</option>
+                  {orgs?.map((o) => (
+                    <option key={o.id} value={o.slug}>
+                      {o.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-        {/* Year filter */}
-        <select
-          value={year}
-          onChange={(e) => setFilter("year", e.target.value)}
-          className="rounded-lg border bg-background px-3 py-2 text-sm"
-        >
-          <option value="">Semua Tahun</option>
-          {YEARS.map((y) => (
-            <option key={y} value={y}>
-              {y}
-            </option>
-          ))}
-        </select>
+              {/* Group/Category filter */}
+              <div>
+                <label className="text-xs font-medium text-muted-foreground">
+                  Kategori
+                </label>
+                <select
+                  value={group}
+                  onChange={(e) => setFilter("group", e.target.value)}
+                  className="mt-1 w-full rounded-lg border bg-background px-3 py-2 text-sm"
+                >
+                  <option value="">Semua Kategori</option>
+                  {groups?.map((g) => (
+                    <option key={g.id} value={g.slug}>
+                      {g.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Active filter badges */}
+        {activeFilterCount > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {type && (
+              <Badge variant="secondary" className="gap-1">
+                Tipe: {type}
+                <button onClick={() => setFilter("type", "")}>
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            )}
+            {year && (
+              <Badge variant="secondary" className="gap-1">
+                Tahun: {year}
+                <button onClick={() => setFilter("year", "")}>
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            )}
+            {org && (
+              <Badge variant="secondary" className="gap-1">
+                Organisasi: {org}
+                <button onClick={() => setFilter("org", "")}>
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            )}
+            {group && (
+              <Badge variant="secondary" className="gap-1">
+                Kategori: {group}
+                <button onClick={() => setFilter("group", "")}>
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Content */}

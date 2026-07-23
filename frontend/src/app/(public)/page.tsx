@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useReleases, useReleaseStats } from "@/hooks/useReleases";
-import { Search, BarChart3, FileText, Database, TrendingUp } from "lucide-react";
+import { useOrganizations } from "@/hooks/useOrganizations";
+import { useGroups } from "@/hooks/useGroups";
+import { Search, BarChart3, FileText, Database, TrendingUp, Building2, Tags } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -14,6 +16,8 @@ export default function HomePage() {
     sort_by: "published_at",
     sort_dir: "desc",
   });
+  const { data: orgs, isLoading: orgsLoading } = useOrganizations();
+  const { data: groups, isLoading: groupsLoading } = useGroups();
 
   return (
     <div className="flex flex-col">
@@ -151,6 +155,83 @@ export default function HomePage() {
               Belum ada release tersedia.
             </p>
           )}
+        </div>
+      </section>
+
+      {/* Featured Organizations */}
+      <section className="border-t bg-muted/30 py-16">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="mb-8 flex items-center justify-between">
+            <h2 className="text-2xl font-bold">Organisasi</h2>
+            <Link
+              href="/releases"
+              className="text-sm font-medium text-primary hover:underline"
+            >
+              Lihat Semua &rarr;
+            </Link>
+          </div>
+
+          {orgsLoading ? (
+            <div className="grid gap-4 md:grid-cols-3">
+              {[...Array(3)].map((_, i) => (
+                <Skeleton key={i} className="h-24 rounded-xl" />
+              ))}
+            </div>
+          ) : orgs && orgs.length > 0 ? (
+            <div className="grid gap-4 md:grid-cols-3">
+              {orgs.slice(0, 6).map((org) => (
+                <Card key={org.id} className="transition-shadow hover:shadow-md">
+                  <CardContent className="flex items-center gap-4 p-5">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                      <Building2 className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-semibold truncate">{org.name}</h3>
+                      {org.dataset_count !== undefined && (
+                        <p className="text-xs text-muted-foreground">
+                          {org.dataset_count} dataset
+                        </p>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </section>
+
+      {/* Featured Groups/Categories */}
+      <section className="py-16">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="mb-8 flex items-center justify-between">
+            <h2 className="text-2xl font-bold">Kategori</h2>
+            <Link
+              href="/releases"
+              className="text-sm font-medium text-primary hover:underline"
+            >
+              Lihat Semua &rarr;
+            </Link>
+          </div>
+
+          {groupsLoading ? (
+            <div className="flex gap-3">
+              {[...Array(4)].map((_, i) => (
+                <Skeleton key={i} className="h-20 w-40 rounded-full" />
+              ))}
+            </div>
+          ) : groups && groups.length > 0 ? (
+            <div className="flex flex-wrap gap-3">
+              {groups.map((group) => (
+                <Link key={group.id} href={`/releases?group=${group.slug}`}>
+                  <div className="inline-flex items-center gap-2 rounded-full border bg-background px-5 py-2.5 text-sm font-medium transition-colors hover:bg-primary hover:text-primary-foreground hover:border-primary">
+                    <Tags className="h-4 w-4" />
+                    {group.name}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : null}
         </div>
       </section>
     </div>

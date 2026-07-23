@@ -15,6 +15,7 @@ type ReleaseServiceInterface interface {
 	UpdateRelease(ctx context.Context, id string, req UpdateReleaseRequest) (*domain.Release, error)
 	DeleteRelease(ctx context.Context, id string) error
 	GetReleaseStats(ctx context.Context) (*ReleaseStatsResponse, error)
+	GetRelatedReleases(ctx context.Context, releaseID string, limit int) ([]domain.Release, error)
 }
 
 // StandardServiceInterface mendefinisikan operasi untuk service standard.
@@ -41,4 +42,22 @@ type StorageServiceInterface interface {
 	UploadStandardDoc(ctx context.Context, file UploadFileRequest) (string, error)
 	DeleteFile(ctx context.Context, url string) error
 	GeneratePresignedURL(ctx context.Context, key string, expiry int32) (string, error)
+}
+
+// OrganizationServiceInterface mendefinisikan operasi untuk service organization.
+type OrganizationServiceInterface interface {
+	GetOrganizations(ctx context.Context) ([]domain.Organization, error)
+	GetOrganizationBySlug(ctx context.Context, slug string) (*domain.Organization, error)
+	CreateOrganization(ctx context.Context, req CreateOrganizationRequest) (*domain.Organization, error)
+	UpdateOrganization(ctx context.Context, id string, req UpdateOrganizationRequest) (*domain.Organization, error)
+	DeleteOrganization(ctx context.Context, id string) error
+}
+
+// GroupServiceInterface mendefinisikan operasi untuk service group.
+type GroupServiceInterface interface {
+	GetGroups(ctx context.Context) ([]domain.Group, error)
+	GetGroupBySlug(ctx context.Context, slug string) (*domain.Group, error)
+	CreateGroup(ctx context.Context, req CreateGroupRequest) (*domain.Group, error)
+	UpdateGroup(ctx context.Context, id string, req UpdateGroupRequest) (*domain.Group, error)
+	DeleteGroup(ctx context.Context, id string) error
 }

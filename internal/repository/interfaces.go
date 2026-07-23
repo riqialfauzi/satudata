@@ -15,6 +15,7 @@ type ReleaseRepositoryInterface interface {
 	UpdateRelease(ctx context.Context, release *domain.Release) error
 	DeleteRelease(ctx context.Context, id string) error
 	GetReleaseStats(ctx context.Context) (map[string]int64, error)
+	GetRelatedReleases(ctx context.Context, releaseID string, limit int) ([]domain.Release, error)
 }
 
 // StandardRepositoryInterface mendefinisikan operasi untuk repository standard.
@@ -58,4 +59,22 @@ type AuditLogFilter struct {
 	Resource string `form:"resource"`
 	Page     int    `form:"page"`
 	Limit    int    `form:"limit"`
+}
+
+// OrganizationRepositoryInterface mendefinisikan operasi untuk repository organization.
+type OrganizationRepositoryInterface interface {
+	GetOrganizations(ctx context.Context) ([]domain.Organization, error)
+	GetOrganizationBySlug(ctx context.Context, slug string) (*domain.Organization, error)
+	CreateOrganization(ctx context.Context, org *domain.Organization) error
+	UpdateOrganization(ctx context.Context, org *domain.Organization) error
+	DeleteOrganization(ctx context.Context, id string) error
+}
+
+// GroupRepositoryInterface mendefinisikan operasi untuk repository group.
+type GroupRepositoryInterface interface {
+	GetGroups(ctx context.Context) ([]domain.Group, error)
+	GetGroupBySlug(ctx context.Context, slug string) (*domain.Group, error)
+	CreateGroup(ctx context.Context, group *domain.Group) error
+	UpdateGroup(ctx context.Context, group *domain.Group) error
+	DeleteGroup(ctx context.Context, id string) error
 }

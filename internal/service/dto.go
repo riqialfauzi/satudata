@@ -123,3 +123,33 @@ type UploadFileRequest struct {
 	ContentType string
 	Data        []byte
 }
+
+// CreateOrganizationRequest adalah request DTO untuk membuat organisasi baru.
+type CreateOrganizationRequest struct {
+	Name        string `json:"name" binding:"required"`
+	Description string `json:"description"`
+	ImageURL    string `json:"image_url"`
+	Website     string `json:"website"`
+}
+
+// UpdateOrganizationRequest adalah request DTO untuk memperbarui organisasi.
+type UpdateOrganizationRequest struct {
+	Name        string  `json:"name"`
+	Description *string `json:"description"`
+	ImageURL    *string `json:"image_url"`
+	Website     *string `json:"website"`
+}
+
+// CreateGroupRequest adalah request DTO untuk membuat grup baru.
+type CreateGroupRequest struct {
+	Name        string `json:"name" binding:"required"`
+	Description string `json:"description"`
+	ImageURL    string `json:"image_url"`
+}
+
+// UpdateGroupRequest adalah request DTO untuk memperbarui grup.
+type UpdateGroupRequest struct {
+	Name        string  `json:"name"`
+	Description *string `json:"description"`
+	ImageURL    *string `json:"image_url"`
+}

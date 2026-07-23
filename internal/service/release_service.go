@@ -214,6 +214,20 @@ func (s *ReleaseService) DeleteRelease(ctx context.Context, id string) error {
 	return s.releaseRepo.DeleteRelease(ctx, id)
 }
 
+// GetRelatedReleases mengembalikan releases terkait.
+func (s *ReleaseService) GetRelatedReleases(ctx context.Context, releaseID string, limit int) ([]domain.Release, error) {
+	if limit <= 0 || limit > 20 {
+		limit = 5
+	}
+
+	releases, err := s.releaseRepo.GetRelatedReleases(ctx, releaseID, limit)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get related releases: %w", err)
+	}
+
+	return releases, nil
+}
+
 // GetReleaseStats mengembalikan statistik releases.
 func (s *ReleaseService) GetReleaseStats(ctx context.Context) (*ReleaseStatsResponse, error) {
 	stats, err := s.releaseRepo.GetReleaseStats(ctx)

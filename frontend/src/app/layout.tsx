@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/shared/providers";
@@ -14,8 +14,43 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Satudata - Portal Data Terbuka",
-  description: "Portal data statistik dan informasi publik Indonesia",
+  title: {
+    default: "Satudata - Portal Data Terbuka",
+    template: "%s - Satudata",
+  },
+  description: "Portal data statistik dan informasi publik Indonesia. Akses dataset, artikel analitis, infografis, dan standar data dari berbagai unit kerja.",
+  keywords: ["data terbuka", "statistik", "Indonesia", "dataset", "portal data", "open data"],
+  authors: [{ name: "Satudata" }],
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    siteName: "Satudata",
+    title: "Satudata - Portal Data Terbuka",
+    description: "Portal data statistik dan informasi publik Indonesia.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Satudata - Portal Data Terbuka",
+    description: "Portal data statistik dan informasi publik Indonesia.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+    ],
+    apple: [],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#006792",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({

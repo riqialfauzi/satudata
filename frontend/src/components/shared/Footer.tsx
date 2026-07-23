@@ -33,6 +33,16 @@ export function Footer() {
                   Standar Data
                 </Link>
               </li>
+              <li>
+                <Link href="/tentang" className="hover:text-foreground">
+                  Tentang
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="hover:text-foreground">
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
