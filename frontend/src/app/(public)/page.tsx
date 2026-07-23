@@ -6,7 +6,6 @@ import { useOrganizations } from "@/hooks/useOrganizations";
 import { useGroups } from "@/hooks/useGroups";
 import {
   Search,
-  BarChart3,
   FileText,
   Database,
   TrendingUp,

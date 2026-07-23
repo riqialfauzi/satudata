@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" fill="none">
+  <!-- Shield shape -->
+  <path d="M100 5 L185 50 L185 120 Q185 180 100 215 Q15 180 15 120 L15 50 Z" 
+        fill="oklch(0.488 0.243 264.376)" opacity="0.12" stroke="oklch(0.488 0.243 264.376)" stroke-width="3"/>
+  
+  <!-- Inner shield -->
+  <path d="M100 25 L168 60 L168 115 Q168 162 100 190 Q32 162 32 115 L32 60 Z" 
+        fill="white" stroke="oklch(0.488 0.243 264.376)" stroke-width="2"/>
+  
+  <!-- Star -->
+  <polygon points="100,35 106,55 127,55 110,67 116,88 100,75 84,88 90,67 73,55 94,55" 
+           fill="oklch(0.488 0.243 264.376)"/>
+  
+  <!-- Crescent moon -->
+  <path d="M100 95 Q115 95 120 105 Q115 100 100 100 Q85 100 80 105 Q85 95 100 95Z" 
+        fill="oklch(0.488 0.243 264.376)"/>
+  
+  <!-- Rencong (traditional sword) -->
+  <path d="M100 105 L98 140 L95 145 L100 148 L105 145 L102 140 Z" 
+        fill="oklch(0.488 0.243 264.376)"/>
+  
+  <!-- Cotton left -->
+  <circle cx="65" cy="130" r="8" fill="oklch(0.488 0.243 264.376)" opacity="0.3"/>
+  <circle cx="60" cy="140" r="6" fill="oklch(0.488 0.243 264.376)" opacity="0.25"/>
+  <circle cx="72" cy="138" r="5" fill="oklch(0.488 0.243 264.376)" opacity="0.2"/>
+  
+  <!-- Cotton right -->
+  <circle cx="135" cy="130" r="8" fill="oklch(0.488 0.243 264.376)" opacity="0.3"/>
+  <circle cx="140" cy="140" r="6" fill="oklch(0.488 0.243 264.376)" opacity="0.25"/>
+  <circle cx="128" cy="138" r="5" fill="oklch(0.488 0.243 264.376)" opacity="0.2"/>
+  
+  <!-- Rice stalks left -->
+  <line x1="55" y1="170" x2="75" y2="145" stroke="oklch(0.488 0.243 264.376)" stroke-width="2" opacity="0.4"/>
+  <line x1="50" y1="175" x2="70" y2="150" stroke="oklch(0.488 0.243 264.376)" stroke-width="1.5" opacity="0.3"/>
+  
+  <!-- Rice stalks right -->
+  <line x1="145" y1="170" x2="125" y2="145" stroke="oklch(0.488 0.243 264.376)" stroke-width="2" opacity="0.4"/>
+  <line x1="150" y1="175" x2="130" y2="150" stroke="oklch(0.488 0.243 264.376)" stroke-width="1.5" opacity="0.3"/>
+  
+  <!-- Bottom ribbon -->
+  <path d="M60 190 Q100 200 140 190 L130 200 Q100 208 70 200 Z" 
+        fill="oklch(0.488 0.243 264.376)" opacity="0.15"/>
+</svg>

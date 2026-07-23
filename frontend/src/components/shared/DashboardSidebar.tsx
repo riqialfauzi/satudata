@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import {
-  BarChart3,
   Database,
   FileText,
   Users,
@@ -32,7 +32,15 @@ export function DashboardSidebar() {
     <aside className="hidden w-64 border-r bg-card md:flex md:flex-col">
       {/* Logo */}
       <div className="flex h-16 items-center gap-2 border-b px-6">
-        <BarChart3 className="h-6 w-6 text-primary" />
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary">
+          <Image
+            src="/logo-icon.svg"
+            alt="Lambang Aceh Besar"
+            width={16}
+            height={16}
+            className="h-4 w-4 brightness-0 invert"
+          />
+        </div>
         <span className="font-bold">Aceh Besar Satu</span>
       </div>
 

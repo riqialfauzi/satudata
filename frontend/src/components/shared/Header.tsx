@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { BarChart3, Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useAuthStore } from "@/store/authStore";
 import { ThemeToggle } from "./ThemeToggle";
@@ -23,7 +24,13 @@ export function Header() {
         {/* Logo */}
         <Link href="/" className="group flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/70 shadow-sm transition-transform duration-300 group-hover:scale-105">
-            <BarChart3 className="h-5 w-5 text-primary-foreground" />
+            <Image
+              src="/logo-icon.svg"
+              alt="Lambang Aceh Besar"
+              width={22}
+              height={22}
+              className="h-5 w-5"
+            />
           </div>
           <span className="text-lg font-bold tracking-tight">
             Aceh Besar <span className="text-primary">Satu</span>
