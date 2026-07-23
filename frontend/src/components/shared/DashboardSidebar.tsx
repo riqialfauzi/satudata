@@ -34,11 +34,11 @@ export function DashboardSidebar() {
       <div className="flex h-16 items-center gap-2 border-b px-6">
         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary">
           <Image
-            src="/logo-icon.svg"
+            src="/lambang-aceh-besar.png"
             alt="Lambang Aceh Besar"
-            width={16}
-            height={16}
-            className="h-4 w-4 brightness-0 invert"
+            width={24}
+            height={24}
+            className="h-6 w-6 object-contain"
           />
         </div>
         <span className="font-bold">Aceh Besar Satu</span>

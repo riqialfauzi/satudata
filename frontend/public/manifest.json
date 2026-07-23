@@ -9,9 +9,9 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/logo-aceh-besar.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/lambang-aceh-besar.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any"
     }
   ]

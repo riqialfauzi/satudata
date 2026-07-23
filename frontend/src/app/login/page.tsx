@@ -58,11 +58,11 @@ export default function LoginPage() {
         <div className="text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-primary/5">
             <Image
-              src="/logo-icon.svg"
+              src="/lambang-aceh-besar.png"
               alt="Lambang Aceh Besar"
-              width={28}
-              height={28}
-              className="h-7 w-7"
+              width={32}
+              height={32}
+              className="h-8 w-8 object-contain"
             />
           </div>
           <h1 className="text-2xl font-bold tracking-tight">Masuk</h1>

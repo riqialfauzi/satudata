@@ -22,11 +22,11 @@ export function Footer() {
             <Link href="/" className="group inline-flex items-center gap-2.5">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/70 shadow-sm">
                 <Image
-                  src="/logo-icon.svg"
+                  src="/lambang-aceh-besar.png"
                   alt="Lambang Aceh Besar"
-                  width={22}
-                  height={22}
-                  className="h-5 w-5"
+                  width={24}
+                  height={24}
+                  className="h-6 w-6 object-contain"
                 />
               </div>
               <span className="text-lg font-bold tracking-tight">
