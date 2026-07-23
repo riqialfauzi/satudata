@@ -129,10 +129,7 @@
   }
 }
 
-/* Smooth scroll & base transitions */
-html {
-  scroll-behavior: smooth;
-}
+/* Base transitions */
 body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
