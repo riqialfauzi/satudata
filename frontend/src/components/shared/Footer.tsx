@@ -9,10 +9,10 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-2 font-bold text-lg">
               <BarChart3 className="h-5 w-5 text-primary" />
-              Satudata
+              Aceh Besar Satu
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
-              Portal data terbuka untuk informasi statistik dan publik Indonesia.
+              Portal data terbuka Kabupaten Aceh Besar.
             </p>
           </div>
           <div>
@@ -25,22 +25,17 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/releases" className="hover:text-foreground">
-                  Data & Artikel
+                  Open Data
                 </Link>
               </li>
               <li>
-                <Link href="/standards" className="hover:text-foreground">
-                  Standar Data
+                <Link href="/statistik-sektoral" className="hover:text-foreground">
+                  Statistik Sektoral
                 </Link>
               </li>
               <li>
-                <Link href="/tentang" className="hover:text-foreground">
-                  Tentang
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="hover:text-foreground">
-                  FAQ
+                <Link href="/ppid" className="hover:text-foreground">
+                  PPID
                 </Link>
               </li>
             </ul>
@@ -48,13 +43,13 @@ export function Footer() {
           <div>
             <h3 className="mb-3 text-sm font-semibold">Kontak</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Email: info@satudata.go.id</li>
-              <li>Telepon: (021) 1234-5678</li>
+              <li>Email: info@acehbesarsatu.go.id</li>
+              <li>Telepon: (0651) 1234-5678</li>
             </ul>
           </div>
         </div>
         <div className="mt-8 border-t pt-4 text-center text-xs text-muted-foreground">
-          &copy; {new Date().getFullYear()} Satudata. All rights reserved.
+          &copy; {new Date().getFullYear()} Aceh Besar Satu. All rights reserved.
         </div>
       </div>
     </footer>

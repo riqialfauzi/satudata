@@ -33,7 +33,7 @@ export function DashboardSidebar() {
       {/* Logo */}
       <div className="flex h-16 items-center gap-2 border-b px-6">
         <BarChart3 className="h-6 w-6 text-primary" />
-        <span className="font-bold">Satudata</span>
+        <span className="font-bold">Aceh Besar Satu</span>
       </div>
 
       {/* Nav */}

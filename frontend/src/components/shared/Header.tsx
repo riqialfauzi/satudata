@@ -15,7 +15,7 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg">
           <BarChart3 className="h-6 w-6 text-primary" />
-          Satudata
+          Aceh Besar Satu
         </Link>
 
         {/* Desktop nav */}
@@ -27,19 +27,16 @@ export function Header() {
             href="/releases"
             className="text-sm font-medium hover:text-primary"
           >
-            Data & Artikel
+            Open Data
           </Link>
           <Link
-            href="/standards"
+            href="/statistik-sektoral"
             className="text-sm font-medium hover:text-primary"
           >
-            Standar Data
+            Statistik Sektoral
           </Link>
-          <Link href="/tentang" className="text-sm font-medium hover:text-primary">
-            Tentang
-          </Link>
-          <Link href="/faq" className="text-sm font-medium hover:text-primary">
-            FAQ
+          <Link href="/ppid" className="text-sm font-medium hover:text-primary">
+            PPID
           </Link>
           <ThemeToggle />
           {isAuthenticated ? (
@@ -81,16 +78,13 @@ export function Header() {
               Beranda
             </Link>
             <Link href="/releases" className="text-sm font-medium" onClick={() => setOpen(false)}>
-              Data & Artikel
+              Open Data
             </Link>
-            <Link href="/standards" className="text-sm font-medium" onClick={() => setOpen(false)}>
-              Standar Data
+            <Link href="/statistik-sektoral" className="text-sm font-medium" onClick={() => setOpen(false)}>
+              Statistik Sektoral
             </Link>
-            <Link href="/tentang" className="text-sm font-medium" onClick={() => setOpen(false)}>
-              Tentang
-            </Link>
-            <Link href="/faq" className="text-sm font-medium" onClick={() => setOpen(false)}>
-              FAQ
+            <Link href="/ppid" className="text-sm font-medium" onClick={() => setOpen(false)}>
+              PPID
             </Link>
             <div className="flex items-center gap-2">
               <ThemeToggle />

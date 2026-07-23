@@ -15,23 +15,23 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Satudata - Portal Data Terbuka",
-    template: "%s - Satudata",
+    default: "Aceh Besar Satu - Portal Data Terbuka",
+    template: "%s - Aceh Besar Satu",
   },
-  description: "Portal data statistik dan informasi publik Indonesia. Akses dataset, artikel analitis, infografis, dan standar data dari berbagai unit kerja.",
-  keywords: ["data terbuka", "statistik", "Indonesia", "dataset", "portal data", "open data"],
-  authors: [{ name: "Satudata" }],
+  description: "Portal data terbuka Kabupaten Aceh Besar. Akses dataset, statistik sektoral, dan informasi publik.",
+  keywords: ["data terbuka", "statistik", "Aceh Besar", "dataset", "portal data", "open data"],
+  authors: [{ name: "Aceh Besar Satu" }],
   openGraph: {
     type: "website",
     locale: "id_ID",
-    siteName: "Satudata",
-    title: "Satudata - Portal Data Terbuka",
-    description: "Portal data statistik dan informasi publik Indonesia.",
+    siteName: "Aceh Besar Satu",
+    title: "Aceh Besar Satu - Portal Data Terbuka",
+    description: "Portal data terbuka Kabupaten Aceh Besar.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Satudata - Portal Data Terbuka",
-    description: "Portal data statistik dan informasi publik Indonesia.",
+    title: "Aceh Besar Satu - Portal Data Terbuka",
+    description: "Portal data terbuka Kabupaten Aceh Besar.",
   },
   robots: {
     index: true,

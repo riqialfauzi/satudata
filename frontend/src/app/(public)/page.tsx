@@ -26,11 +26,11 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 text-center">
           <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
             Portal Data{" "}
-            <span className="text-primary">Terbuka</span> Indonesia
+            <span className="text-primary">Terbuka</span> Aceh Besar
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            Akses data statistik, artikel analitis, infografis, dan standar data
-            nasional secara terbuka dan transparan.
+            Akses data statistik sektoral, open data, dan informasi publik
+            Kabupaten Aceh Besar secara terbuka dan transparan.
           </p>
 
           {/* Search CTA */}

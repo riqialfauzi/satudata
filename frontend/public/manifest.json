@@ -1,7 +1,7 @@
 {
-  "name": "Satudata - Portal Data Terbuka",
-  "short_name": "Satudata",
-  "description": "Portal data statistik dan informasi publik Indonesia",
+  "name": "Aceh Besar Satu - Portal Data Terbuka",
+  "short_name": "Aceh Besar Satu",
+  "description": "Portal data terbuka Kabupaten Aceh Besar",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
