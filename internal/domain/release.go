@@ -55,7 +55,7 @@ type Release struct {
 	Status        ReleaseStatus `gorm:"type:varchar(50);not null;default:draft;index" json:"status"`
 	Year          int           `gorm:"not null;index" json:"year"`
 	CoverImageURL string        `gorm:"type:text" json:"cover_image_url,omitempty"`
-	Tags          TagsJSON      `gorm:"type:text[]" json:"tags,omitempty"`
+	Tags          TagsJSON      `gorm:"type:jsonb" json:"tags,omitempty"`
 	ViewCount     int           `gorm:"not null;default:0" json:"view_count"`
 	PublishedAt   *time.Time    `json:"published_at,omitempty"`
 	CreatedBy     *uuid.UUID    `gorm:"type:uuid;index" json:"created_by,omitempty"`
@@ -70,7 +70,7 @@ func (Release) TableName() string {
 	return "releases"
 }
 
-// TagsJSON is a custom type for storing tags as PostgreSQL text array.
+// TagsJSON is a custom type for storing tags as JSONB.
 type TagsJSON []string
 
 // Scan implements the Scanner interface for TagsJSON.
@@ -153,7 +153,7 @@ type ArticleMetadata struct {
 	Content        string    `gorm:"type:text;not null" json:"content"`
 	Excerpt        string    `gorm:"type:text" json:"excerpt,omitempty"`
 	AuthorName     string    `gorm:"type:varchar(255)" json:"author_name,omitempty"`
-	ReadingTimeMin *int      `json:"reading_time_minutes,omitempty"`
+	ReadingTimeMin *int      `gorm:"column:reading_time_minutes" json:"reading_time_minutes,omitempty"`
 	IsFeatured     bool      `gorm:"not null;default:false;index" json:"is_featured"`
 	Category       string    `gorm:"type:varchar(100);index" json:"category,omitempty"`
 	CreatedAt      time.Time `gorm:"not null;default:NOW()" json:"created_at"`

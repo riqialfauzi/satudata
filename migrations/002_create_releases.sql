@@ -10,7 +10,7 @@ CREATE TABLE releases (
     status VARCHAR(50) NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived')),
     year INT NOT NULL,
     cover_image_url TEXT,
-    tags TEXT[] DEFAULT '{}',
+    tags JSONB DEFAULT '[]'::jsonb,
     view_count INT NOT NULL DEFAULT 0,
     published_at TIMESTAMP WITH TIME ZONE,
     created_by UUID REFERENCES users(id),
